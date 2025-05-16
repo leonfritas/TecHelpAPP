@@ -1,21 +1,24 @@
-import React from 'react';
-import { View, StyleSheet, SafeAreaView } from 'react-native';
 import ButtonHome from '@/components/ButtonHome';
-import Header from '@/components/Header';
 import { useRouter } from 'expo-router';
+import React from 'react';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 
 export default function HomeScreen() {
   const router = useRouter();
 
   const handleLogout = () => {
-    router.replace('/login'); // Caminho relativo ao arquivo na pasta `app`
+    router.replace('/login'); 
   };
 
   const goToManager = () => {
-    router.replace('/manager'); // Caminho relativo ao arquivo na pasta `app`
+    router.replace('/manager'); 
   };  
 
+  const goToInsert= () => {
+    router.replace('/insert-ticket');
+  };  
+  
   return (
       <SafeAreaView style={styles.container}>
         
@@ -24,7 +27,8 @@ export default function HomeScreen() {
 
           <ButtonHome 
             text="ABERTURA DE CHAMADOS"
-            icon="add-task"/>
+            icon="add-task"
+            onPress={goToInsert}/>
           <ButtonHome 
             text="GERENCIAR CHAMADOS"
             icon="list-alt"
