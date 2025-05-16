@@ -10,7 +10,7 @@ const AboutApp = () => {
 
             <Text style={styles.sectionTitle}>📱 O que é o TecHelp?</Text>
             <Text style={styles.text}>
-                O TecHelp é um aplicativo de help desk desenvolvido para facilitar a comunicação entre usuários e técnicos de suporte. 
+                O TecHelp é um sistema de help desk desenvolvido para facilitar a comunicação entre usuários e técnicos de suporte. 
                 Através da plataforma, é possível abrir chamados, acompanhar o andamento dos atendimentos e visualizar o histórico completo de interações.
             </Text>
 
@@ -21,9 +21,9 @@ const AboutApp = () => {
 
             <Text style={styles.sectionTitle}>👨‍💻 Desenvolvedores</Text>
             <Text style={styles.text}>
-                Este aplicativo foi desenvolvido pelos alunos:
-                {'\n\n'}• Andreo Henrique
-                {'\n'}• Alexandre Expedito
+                Este projeto foi desenvolvido pelos alunos:
+                {'\n\n'}• Alexandre Expedito
+                {'\n'}• Andreo Henrique
                 {'\n'}• Gabriel Lucas
                 {'\n'}• Guilherme
                 {'\n'}• Leonardo Ribeiro

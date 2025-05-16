@@ -12,9 +12,13 @@ export default function HomeScreen() {
     router.replace('/login'); // Caminho relativo ao arquivo na pasta `app`
   };
 
+  const goToManager = () => {
+    router.replace('/manager'); // Caminho relativo ao arquivo na pasta `app`
+  };  
+
   return (
       <SafeAreaView style={styles.container}>
-        <Header />
+        
 
         <View style={styles.buttonContainer}>
 
@@ -23,7 +27,8 @@ export default function HomeScreen() {
             icon="add-task"/>
           <ButtonHome 
             text="GERENCIAR CHAMADOS"
-            icon="list-alt"/>            
+            icon="list-alt"
+            onPress={goToManager}/>            
           <ButtonHome 
             text="HISTÓRICO"
             icon="history"/>
@@ -48,7 +53,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f2f2f2',
-    marginTop: 30,
+
   },
   buttonContainer: {
     flex: 1,    
