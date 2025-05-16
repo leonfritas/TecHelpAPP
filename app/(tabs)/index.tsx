@@ -2,8 +2,16 @@ import React from 'react';
 import { View, StyleSheet, SafeAreaView } from 'react-native';
 import ButtonHome from '@/components/ButtonHome';
 import Header from '@/components/Header';
+import { useRouter } from 'expo-router';
 
 export default function HomeScreen() {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    router.replace('/login'); // Caminho relativo ao arquivo na pasta `app`
+  };
+
+
   return (
       <SafeAreaView style={styles.container}>
         <Header />
@@ -14,17 +22,18 @@ export default function HomeScreen() {
             text="ABERTURA DE CHAMADOS"
             icon="add-task"/>
           <ButtonHome 
+            text="GERENCIAR CHAMADOS"
+            icon="list-alt"/>            
+          <ButtonHome 
             text="HISTÓRICO"
             icon="history"/>
           <ButtonHome 
             text="CHATBOX"
             icon="chat"/>
           <ButtonHome 
-            text="CONHEÇA NOSSO PROJETO"
-            icon="info"/>
-          <ButtonHome 
-            text="NOSSO APLICATIVO"
-            icon="smartphone"/> 
+            text="SAIR"
+            icon="exit-to-app"
+            onPress={handleLogout}/>            
 
         </View>
       </SafeAreaView>
@@ -42,10 +51,9 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   buttonContainer: {
-    flex: 1,
-    justifyContent: 'space-around',
-    gap: 1,
-    marginBottom: 30,
+    flex: 1,    
+    gap: 20,
+    marginVertical: 30,
     paddingHorizontal: 20,
   }
 });

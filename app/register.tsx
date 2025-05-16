@@ -33,7 +33,7 @@ export default function RegisterScreen() {
         <View style={styles.inputContainer}>
           <FontAwesome name="building" size={18} color="#aaa" style={styles.icon} />
           <TextInput
-            placeholder="Digite seu nome de usuário"
+            placeholder="Digite seu departamento"
             style={styles.input}
             value={department}
             onChangeText={setDepartment}

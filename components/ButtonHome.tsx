@@ -1,13 +1,22 @@
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default function ButtonHome( props : any) {
-    return (
-        <TouchableOpacity style={[styles.button]}>
-            <MaterialIcons name={props.icon} size={28} color="#000" />
-            <Text style={styles.buttonText}>{props.text}</Text>
-        </TouchableOpacity>
-    )
+interface ButtonHomeProps {
+  text: string;
+  icon: React.ComponentProps<typeof MaterialIcons>['name'];
+  onPress?: () => void; // Nova prop para ação de clique
+}
+
+export default function ButtonHome({ text, icon, onPress }: ButtonHomeProps) {
+  return (
+    <TouchableOpacity 
+      style={styles.button}
+      onPress={onPress} // Adiciona a prop onPress aqui
+    >
+      <MaterialIcons name={icon} size={28} color="#000" />
+      <Text style={styles.buttonText}>{text}</Text>
+    </TouchableOpacity>
+  );
 }
 
 
