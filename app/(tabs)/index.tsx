@@ -4,13 +4,13 @@ import ButtonHome from '@/components/ButtonHome';
 import Header from '@/components/Header';
 import { useRouter } from 'expo-router';
 
+
 export default function HomeScreen() {
   const router = useRouter();
 
   const handleLogout = () => {
     router.replace('/login'); // Caminho relativo ao arquivo na pasta `app`
   };
-
 
   return (
       <SafeAreaView style={styles.container}>

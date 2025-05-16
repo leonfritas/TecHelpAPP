@@ -29,10 +29,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 25,
         borderRadius: 15,
         elevation: 5,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
+        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
         backgroundColor: '#fff',
     },
     buttonText: {

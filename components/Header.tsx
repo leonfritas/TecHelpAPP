@@ -7,7 +7,9 @@ import {
   Modal,
   SafeAreaView
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // ou use react-native-vector-icons
+import  logoTecHelp  from '../assets/images/logotechelp.png';
+import { Image } from 'react-native';
+
 
 interface HeaderProps {
   title?: string;
@@ -24,7 +26,8 @@ const Header: React.FC<HeaderProps> = ({ title = 'TecHelp' }) => {
     <>
       <SafeAreaView >
         <View style={styles.header}>
-          <Text style={styles.logo}>{title}</Text>
+          
+          <Image source={logoTecHelp} alt="logo" resizeMode="contain" style={styles.logo} />
           {/* <TouchableOpacity onPress={toggleMenu}>
             <Ionicons name="menu" size={28} color="#fff" />
           </TouchableOpacity> */}
@@ -53,16 +56,15 @@ const Header: React.FC<HeaderProps> = ({ title = 'TecHelp' }) => {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#111827',
-    padding: 16,
+    backgroundColor: '#111827',    
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
   },
   logo: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold'
+    width: 110,
+    height: 50,
+    marginVertical: 10,
   },
   modalOverlay: {
     flex: 1,
