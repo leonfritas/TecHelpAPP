@@ -27,6 +27,7 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" options={{ headerShown: false }}  />
           <Stack.Screen name="manager" options={{headerShown: false}} />
           <Stack.Screen name="insert-ticket" options={{headerShown: false}}/>
+          <Stack.Screen name="history-tickets" options={{headerShown: false}}/>
           <Stack.Screen name="+not-found" />
         </Stack>
         <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />

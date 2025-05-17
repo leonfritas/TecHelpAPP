@@ -4,13 +4,13 @@ import { Picker } from '@react-native-picker/picker';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import {
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 type RootStackParamList = {
@@ -27,7 +27,6 @@ export default function InsertTicket() {
 
   const handleSubmit = () => {
     console.log({ tipoChamado, categoria, descricao, prioridade });
-    // navigation.navigate('Home'); // descomente se quiser voltar após envio
   };
 
   return (

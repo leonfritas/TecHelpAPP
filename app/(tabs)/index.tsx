@@ -17,7 +17,11 @@ export default function HomeScreen() {
 
   const goToInsert= () => {
     router.replace('/insert-ticket');
-  };  
+  }; 
+  
+    const goToHistory= () => {
+    router.replace('/history-tickets');
+  }; 
   
   return (
       <SafeAreaView style={styles.container}>
@@ -35,7 +39,8 @@ export default function HomeScreen() {
             onPress={goToManager}/>            
           <ButtonHome 
             text="HISTÓRICO"
-            icon="history"/>
+            icon="history"
+            onPress={goToHistory}/>
           <ButtonHome 
             text="CHATBOX"
             icon="chat"/>
