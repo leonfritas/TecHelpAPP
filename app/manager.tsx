@@ -1,8 +1,19 @@
+import Header from '@/components/Header';
+import { NavigationProp } from '@react-navigation/native';
+import { useNavigation } from 'expo-router';
 import React, { useState } from 'react';
-import { View, StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet } from 'react-native';
+
+type RootStackParamList = {
+  Home: undefined;
+  InsertTicket: undefined;
+};
+
+
 
 export default function Manager() {
   const [statusSelecionado, setStatusSelecionado] = useState('Em Aberto');
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const chamados = [
     {
@@ -55,6 +66,8 @@ export default function Manager() {
     },    
   ];
 
+
+
   const chamadosFiltrados = chamados.filter(
     (chamado) => chamado.status === statusSelecionado
   );
@@ -71,6 +84,12 @@ export default function Manager() {
     <div style={styles.container}>
       <h2 style={styles.titulo}>Gerenciar Chamados</h2>
 
+      <Header
+        showBackButton={true}
+        navigation={navigation}
+        title="Abrir Chamado"
+      />
+
       <div style={styles.statusBar}>
         {['Em Aberto', 'Em Andamento', 'Finalizado'].map((status) => (
           <button
@@ -86,8 +105,9 @@ export default function Manager() {
             {status}
           </button>
         ))}
+        
       </div>
-
+      
       <div style={styles.grid}>
         {chamadosFiltrados.map((chamado) => (
           <div key={chamado.id} style={styles.card}>
@@ -108,6 +128,7 @@ export default function Manager() {
         ))}
       </div>
     </div>
+    
   );
 }
 

@@ -1,95 +1,71 @@
-import React, { useState } from 'react';
+import logoTecHelp from '@/assets/images/logotechelp.png';
+import { MaterialIcons } from '@expo/vector-icons';
+import { NavigationProp } from '@react-navigation/native';
+import React from 'react';
 import {
-  View,
+  Image,
+  SafeAreaView,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  StyleSheet,
-  Modal,
-  SafeAreaView
+  View,
 } from 'react-native';
-import  logoTecHelp  from '../assets/images/logotechelp.png';
-import { Image } from 'react-native';
-
 
 interface HeaderProps {
   title?: string;
+  showBackButton?: boolean;
+  navigation?: NavigationProp<any>;
 }
 
-const Header: React.FC<HeaderProps> = ({ title = 'TecHelp' }) => {
-  const [menuVisible, setMenuVisible] = useState(false);
-
-  const toggleMenu = () => {
-    setMenuVisible(!menuVisible);
-  };
-
+const Header: React.FC<HeaderProps> = ({
+  title = 'TecHelp',
+  showBackButton = false,
+  navigation,
+}) => {
   return (
-    <>
-      <SafeAreaView >
-        <View style={styles.header}>
-          
-          <Image source={logoTecHelp} alt="logo" resizeMode="contain" style={styles.logo} />
-          {/* <TouchableOpacity onPress={toggleMenu}>
-            <Ionicons name="menu" size={28} color="#fff" />
-          </TouchableOpacity> */}
+    <SafeAreaView>
+      <View style={styles.header}>
+        <View style={styles.leftContent}>
+          <Image
+            source={logoTecHelp}
+            resizeMode="contain"
+            style={styles.logo}
+          />
+          <Text style={styles.title}>{title}</Text>
         </View>
-      </SafeAreaView>
 
-      {/* <Modal
-        animationType="fade"
-        transparent={true}
-        visible={menuVisible}
-        onRequestClose={toggleMenu}
-      > */}
-        {/* <TouchableOpacity style={styles.modalOverlay} onPress={toggleMenu}>
-          <SafeAreaView style={styles.menuContainer}>
-            {['ABERTURA DE CHAMADAS', 'HISTORICO DE CHAMADAS', 'CHATBOT', 'CONHEÇA NOSSO PROJETO', 'NOSSO APLICATIVO'].map((item, index) => (
-              <TouchableOpacity key={index} style={styles.menuItem} onPress={() => {}}>
-                <Text style={styles.menuText}>{item}</Text>
-              </TouchableOpacity>
-            ))}
-          </SafeAreaView>
-        </TouchableOpacity> */}
-      {/* </Modal> */}
-    </>
+        {showBackButton && (
+          <TouchableOpacity onPress={() => navigation?.goBack()}>
+            <MaterialIcons name="arrow-back" size={28} color="#fff" />
+          </TouchableOpacity>
+        )}
+      </View>
+    </SafeAreaView>
   );
 };
 
+export default Header;
+
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#111827',    
     flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#2a2a2a',
+    padding: 12,
     justifyContent: 'space-between',
-    alignItems: 'center'
+  },
+  leftContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   logo: {
-    width: 110,
-    height: 50,
-    marginVertical: 10,
+    width: 40,
+    height: 40,
+    marginRight: 10,
   },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: '#00000088',
-    justifyContent: 'flex-start'
+  title: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#fff',
   },
-  menuContainer: {
-    backgroundColor: '#f3f4f6',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    elevation: 5
-  },
-  menuItem: {
-    backgroundColor: '#fff',
-    padding: 16,
-    borderRadius: 8,
-    marginVertical: 6,
-    alignItems: 'center'
-  },
-  menuText: {
-    fontWeight: 'bold',
-    color: '#000'
-  }
 });
-
-export default Header;
