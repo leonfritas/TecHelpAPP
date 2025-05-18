@@ -1,6 +1,7 @@
 import logoTecHelp from '@/assets/images/logotechelp.png';
 import { MaterialIcons } from '@expo/vector-icons';
 import { NavigationProp } from '@react-navigation/native';
+import { router } from 'expo-router';
 import React from 'react';
 import {
   Image,
@@ -35,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({
         </View>
 
         {showBackButton && (
-          <TouchableOpacity onPress={() => navigation?.goBack()}>
+          <TouchableOpacity onPress={() => router.replace('/(tabs)')}>
             <MaterialIcons name="arrow-back" size={28} color="#fff" />
           </TouchableOpacity>
         )}
