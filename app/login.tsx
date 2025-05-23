@@ -15,7 +15,7 @@ export default function LoginPage() {
         <View style={styles.container}>
             <Text style={styles.title}>TecHelp</Text>
 
-            <Text style={styles.label}>Username</Text>
+            <Text style={styles.label}>Usuário</Text>
             <View style={styles.inputContainer}>
                 <TextInput
                 style={styles.input}
@@ -28,7 +28,7 @@ export default function LoginPage() {
                 </TouchableOpacity>
             </View>
 
-            <Text style={styles.label}>Password</Text>
+            <Text style={styles.label}>Senha</Text>
             <View style={styles.inputContainer}>
                 <TextInput
                 style={styles.input}

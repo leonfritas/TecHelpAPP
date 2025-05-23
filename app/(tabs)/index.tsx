@@ -8,23 +8,25 @@ export default function HomeScreen() {
   const router = useRouter();
 
   const handleLogout = () => {
-    router.replace('/login'); 
+    router.push('/login'); 
+  };
+
+  const goToInsert = () => {
+    router.push('/insert-ticket');
   };
 
   const goToManager = () => {
-    router.replace('/manager'); 
-  };  
+    router.push('/manager');
+  };
 
-  const goToInsert= () => {
-    router.replace('/insert-ticket');
-  }; 
-  
-    const goToHistory= () => {
-    router.replace('/history-tickets');
-  }; 
-  const goToChatBot= () => {
-    router.replace('/chatbot-tickets');
-  }; 
+  const goToHistory = () => {
+    router.push('/history-tickets');
+  };
+
+  const goToChatBot = () => {
+    router.push('/chatbot-tickets');
+  };
+
   return (
       <SafeAreaView style={styles.container}>
         

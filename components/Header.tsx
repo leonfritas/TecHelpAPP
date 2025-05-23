@@ -1,8 +1,8 @@
 import logoTecHelp from '@/assets/images/logotechelp.png';
 import { MaterialIcons } from '@expo/vector-icons';
 import { NavigationProp } from '@react-navigation/native';
-import { router } from 'expo-router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'expo-router';
 import {
   Image,
   SafeAreaView,
@@ -18,11 +18,16 @@ interface HeaderProps {
   navigation?: NavigationProp<any>;
 }
 
+const router = useRouter();
+const pathname = usePathname();
 const Header: React.FC<HeaderProps> = ({
   title = 'TecHelp',
-  showBackButton = false,
-  navigation,
+  showBackButton = false,  
 }) => {
+
+  function handleNavigation() {
+    router.push('/(tabs)');
+  }
   return (
     <SafeAreaView>
       <View style={styles.header}>
@@ -36,7 +41,7 @@ const Header: React.FC<HeaderProps> = ({
         </View>
 
         {showBackButton && (
-          <TouchableOpacity onPress={() => router.replace('/(tabs)')}>
+          <TouchableOpacity onPress={() => handleNavigation()}>
             <MaterialIcons name="arrow-back" size={28} color="#fff" />
           </TouchableOpacity>
         )}
