@@ -1,7 +1,7 @@
 import Header from '@/components/Header';
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -9,7 +9,10 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
+import { getTickets } from '@/service/ticket-service'; // ajuste o caminho conforme sua pasta
+import type { TicketType } from '@/service/ticket-service';
 
 type RootStackParamList = {
   Home: undefined;
@@ -18,69 +21,40 @@ type RootStackParamList = {
 
 export default function Manager() {
   const [statusSelecionado, setStatusSelecionado] = useState('Em Aberto');
+  const [chamados, setChamados] = useState<TicketType[]>([]);
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  const chamados = [
-    {
-      id: 1,
-      titulo: 'Erro no sistema',
-      data: '16/05/2025',
-      usuario: 'João Silva',
-      descricao: 'Sistema não carrega após login.',
-      status: 'Em Aberto',
-    },
-    {
-      id: 2,
-      titulo: 'Erro 2',
-      data: '16/05/2025',
-      usuario: 'João Silva',
-      descricao: 'Sistema não carrega após login.',
-      status: 'Em Aberto',
-    },
-    {
-      id: 3,
-      titulo: 'Impressora não imprime',
-      data: '15/05/2025',
-      usuario: 'Maria Souza',
-      descricao: 'Documento trava na fila de impressão.',
-      status: 'Em Andamento',
-    },
-    {
-      id: 4,
-      titulo: 'Impressora 4',
-      data: '15/05/2025',
-      usuario: 'Maria Souza',
-      descricao: 'Documento trava na fila de impressão.',
-      status: 'Em Andamento',
-    },
-    {
-      id: 5,
-      titulo: 'Alterar senha de acesso',
-      data: '10/05/2025',
-      usuario: 'Carlos Pereira',
-      descricao: 'Solicita troca de senha.',
-      status: 'Finalizado',
-    },
-    {
-      id: 6,
-      titulo: 'Alterar 6',
-      data: '10/05/2025',
-      usuario: 'Carlos Pereira',
-      descricao: 'Solicita troca de senha.',
-      status: 'Finalizado',
-    },
-  ];
+  const carregarChamados = async (status: string) => {
+    
+    try {
+      setLoading(true);
+      const data = await getTickets({
+        idTicket: null,
+        dateTicket: null,
+        status: status,
+      });
+      console.log('Chamados carregados:', data);
+      setChamados(data);
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Erro', 'Não foi possível carregar os chamados.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const chamadosFiltrados = chamados.filter(
-    (chamado) => chamado.status === statusSelecionado
-  );
+  // chama API quando statusSelecionado mudar
+  useEffect(() => {
+    carregarChamados(statusSelecionado);
+  }, [statusSelecionado]);
 
   const editarStatus = (id: number) => {
-    Alert.alert(`Editar status do chamado #${id}`);
+    alert(`Editar status do chamado #${id}`);
   };
 
   const finalizarChamado = (id: number) => {
-    Alert.alert(`Finalizar chamado #${id}`);
+    alert(`Finalizar chamado #${id}`);
   };
 
   return (
@@ -94,13 +68,14 @@ export default function Manager() {
         <Text style={styles.titulo}>Gerenciar Chamados</Text>
 
         <View style={styles.statusBar}>
-          {['Em Aberto', 'Em Andamento', 'Finalizado'].map((status) => (
+          {['Aberto', 'Em andamento'].map((status) => (
             <TouchableOpacity
               key={status}
               style={[
                 styles.statusButton,
                 {
-                  backgroundColor: status === statusSelecionado ? '#2563eb' : '#ffffff',
+                  backgroundColor:
+                    status === statusSelecionado ? '#2563eb' : '#ffffff',
                   borderColor: '#2563eb',
                 },
               ]}
@@ -118,31 +93,44 @@ export default function Manager() {
           ))}
         </View>
 
-        <View style={styles.grid}>
-          {chamadosFiltrados.map((chamado) => (
-            <View key={chamado.id} style={styles.card}>
-              <Text style={styles.cardTitle}>{chamado.titulo}</Text>
-              <Text><Text style={styles.bold}>Data:</Text> {chamado.data}</Text>
-              <Text><Text style={styles.bold}>Solicitante:</Text> {chamado.usuario}</Text>
-              <Text><Text style={styles.bold}>Descrição:</Text> {chamado.descricao}</Text>
+        {loading ? (
+          <ActivityIndicator size="large" color="#fff" style={{ marginTop: 20 }} />
+        ) : (
+          <View style={styles.grid}>
+            {chamados.map((chamado) => (
+              <View key={chamado.idTicket} style={styles.card}>
+                <Text style={styles.cardTitle}>{chamado.nameTicket}</Text>
+                <Text>
+                  <Text style={styles.bold}>Data:</Text> {chamado.dateTicket}
+                </Text>
+                <Text>
+                  <Text style={styles.bold}>Solicitante:</Text> {chamado.nameUser}
+                </Text>
+                <Text>
+                  <Text style={styles.bold}>Categoria:</Text> {chamado.nameCategory}
+                </Text>
+                <Text>
+                  <Text style={styles.bold}>Descrição:</Text> {chamado.description}
+                </Text>
 
-              <View style={styles.botoes}>
-                <TouchableOpacity
-                  style={styles.editBtn}
-                  onPress={() => editarStatus(chamado.id)}
-                >
-                  <Text>Editar Status</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.finalizarBtn}
-                  onPress={() => finalizarChamado(chamado.id)}
-                >
-                  <Text style={{ color: '#fff' }}>Finalizar</Text>
-                </TouchableOpacity>
+                <View style={styles.botoes}>
+                  <TouchableOpacity
+                    style={styles.editBtn}
+                    onPress={() => editarStatus(chamado.idTicket)}
+                  >
+                    <Text>Editar Status</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.finalizarBtn}
+                    onPress={() => finalizarChamado(chamado.idTicket)}
+                  >
+                    <Text style={{ color: '#fff' }}>Finalizar</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          ))}
-        </View>
+            ))}
+          </View>
+        )}
       </ScrollView>
     </>
   );
@@ -182,10 +170,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 10,
     padding: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
     elevation: 4,
   },
   cardTitle: {

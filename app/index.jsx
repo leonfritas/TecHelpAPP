@@ -1,5 +1,7 @@
 import { Redirect } from 'expo-router';
+import LoginPage from './login';
 
 export default function Index() {
-  return <Redirect href="/splash" />;
+  return <LoginPage />;
+  // return <Redirect href="/splash" />;
 }

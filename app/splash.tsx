@@ -14,37 +14,37 @@ export default function SplashScreen() {
   const logoTranslateX = useRef(new Animated.Value(0)).current;
   const loginTranslateX = useRef(new Animated.Value(width)).current;
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      Animated.parallel([
-        Animated.timing(logoTranslateX, {
-          toValue: -width,
-          duration: 700,
-          useNativeDriver: true,
-        }),
-        Animated.timing(loginTranslateX, {
-          toValue: 0,
-          duration: 700,
-          useNativeDriver: true,
-        }),
-      ]).start();
-    }, 2000); 
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     Animated.parallel([
+  //       Animated.timing(logoTranslateX, {
+  //         toValue: -width,
+  //         duration: 700,
+  //         useNativeDriver: true,
+  //       }),
+  //       Animated.timing(loginTranslateX, {
+  //         toValue: 0,
+  //         duration: 700,
+  //         useNativeDriver: true,
+  //       }),
+  //     ]).start();
+  //   }, 2000); 
 
-    return () => clearTimeout(timeout);
-  }, []);
+  //   return () => clearTimeout(timeout);
+  // }, []);
 
   return (
     <View style={styles.container}>
 
-      <Animated.View style={[styles.loginContainer, { transform: [{ translateX: loginTranslateX }] }]}>
+      {/* <Animated.View style={[styles.loginContainer, { transform: [{ translateX: loginTranslateX }] }]}> */}
         <LoginPage />
-      </Animated.View>
+      {/* </Animated.View> */}
 
-      <Animated.Image
+      {/* <Animated.Image
         source={require('../assets/images/logotechelp.png')} 
         style={[styles.logo, { transform: [{ translateX: logoTranslateX }] }]}
         resizeMode="contain"
-      />
+      /> */}
     </View>
   );
 }
