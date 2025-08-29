@@ -1,5 +1,4 @@
-    // app/chatbot-tickets.tsx
-    import Header from '@/components/Header';
+import Header from '@/components/Header';
 import { MaterialIcons } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';

@@ -1,8 +1,11 @@
-import Header from '@/components/Header'; // Se não estiver usando alias, troque por '../components/Header'
+import Header from '@/components/Header';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { Picker } from '@react-native-picker/picker';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
+import { createTicket } from '@/service/ticket-insert';
+import { getCategories } from '@/service/category-select';
+import { CategoryType } from '@/service/category-select';
 import {
   SafeAreaView,
   ScrollView,
@@ -11,6 +14,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Alert,
+  ActivityIndicator
 } from 'react-native';
 
 type RootStackParamList = {
@@ -22,12 +27,48 @@ export default function InsertTicket() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [tipoChamado, setTipoChamado] = useState('');
   const [categoria, setCategoria] = useState('');
+  const [categorias, setCategorias] = useState<CategoryType[]>([]);
   const [descricao, setDescricao] = useState('');
   const [prioridade, setPrioridade] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {
-    console.log({ tipoChamado, categoria, descricao, prioridade });
+  const handleSubmit = async () => {            
+    try {
+      setLoading(true);
+      const data = await createTicket({
+        nameTicket: tipoChamado,
+        description: descricao,
+        categoryId: Number(categoria), 
+        status: prioridade,
+        dateTicket: new Date(),
+        requesterId: 1, 
+
+      });
+
+      console.log('Chamados carregados:', data);          
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Erro', 'Não foi possível inserir chamado.');
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const listCategories = async () => {
+    try {
+      const data = await getCategories();
+      setCategorias(data); 
+      if (data.length > 0) {
+        setCategoria(data[0].idCategory.toString()); 
+      }
+    } catch (error) {
+      console.error('Erro ao carregar categorias:', error);
+    }
+  };
+
+  React.useEffect(() => {
+    listCategories();
+  }, []);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -67,14 +108,16 @@ export default function InsertTicket() {
             style={styles.picker}
             dropdownIconColor="#3b82f6"
           >
-            <Picker.Item label="Selecione a categoria" value="" />
-            <Picker.Item label="Acesso" value="acesso" />
-            <Picker.Item label="Financeiro" value="financeiro" />
-            <Picker.Item label="Geral" value="geral" />
-            <Picker.Item label="Software" value="software" />
-            <Picker.Item label="Hardware" value="hardware" />
+            {categorias.map((cat) => (
+              <Picker.Item 
+                key={cat.idCategory} 
+                label={cat.nameCategory} 
+                value={cat.idCategory.toString()} 
+              />
+            ))}
           </Picker>
         </View>
+
 
         <Text style={styles.label}>Prioridade</Text>
         <View style={styles.pickerContainer}>
@@ -102,19 +145,23 @@ export default function InsertTicket() {
           value={descricao}
           onChangeText={setDescricao}
         />
-
-        <TouchableOpacity
-          style={[
-            styles.button,
-            (!tipoChamado || !categoria || !descricao || !prioridade) &&
-              styles.disabledButton,
-          ]}
-          onPress={handleSubmit}
-          disabled={!tipoChamado || !categoria || !descricao || !prioridade}
-        >
-          <Text style={styles.buttonText}>ABRIR CHAMADO</Text>
-          <IconSymbol name="chevron.right" color="#fff" size={20} />
-        </TouchableOpacity>
+        {
+          loading?
+            <ActivityIndicator size="large" color="#fff" style={{ marginTop: 20 }} />
+          :
+            <TouchableOpacity
+              style={[
+                styles.button,
+                (!tipoChamado || !categoria || !descricao || !prioridade) &&
+                  styles.disabledButton,
+              ]}
+              onPress={handleSubmit}
+              disabled={!tipoChamado || !categoria || !descricao || !prioridade}
+            >
+              <Text style={styles.buttonText}>ABRIR CHAMADO</Text>
+              <IconSymbol name="chevron.right" color="#fff" size={20} />
+            </TouchableOpacity>
+        }
       </ScrollView>
     </SafeAreaView>
   );

@@ -1,18 +1,18 @@
 import Header from '@/components/Header';
+import type { TicketType } from '@/service/ticket-select';
+import { getTickets } from '@/service/ticket-select'; 
 import { NavigationProp } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
   ActivityIndicator,
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { getTickets } from '@/service/ticket-service'; // ajuste o caminho conforme sua pasta
-import type { TicketType } from '@/service/ticket-service';
 
 type RootStackParamList = {
   Home: undefined;
@@ -44,7 +44,6 @@ export default function Manager() {
     }
   };
 
-  // chama API quando statusSelecionado mudar
   useEffect(() => {
     carregarChamados(statusSelecionado);
   }, [statusSelecionado]);

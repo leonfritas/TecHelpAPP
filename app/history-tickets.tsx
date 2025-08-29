@@ -1,9 +1,9 @@
 import Header from '@/components/Header';
+import { getTickets, TicketType } from '@/service/ticket-select';
 import { MaterialIcons } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, Alert } from 'react-native';
-import { getTickets, TicketType } from '@/service/ticket-service';
+import { ActivityIndicator, Alert, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type RootStackParamList = {
   Home: undefined;
