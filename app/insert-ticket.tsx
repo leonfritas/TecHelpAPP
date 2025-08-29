@@ -17,6 +17,7 @@ import {
   Alert,
   ActivityIndicator
 } from 'react-native';
+import { navigate } from 'expo-router/build/global-state/routing';
 
 type RootStackParamList = {
   Home: undefined;
@@ -44,7 +45,8 @@ export default function InsertTicket() {
         requesterId: 1, 
 
       });
-
+      alert('Chamado inserido com sucesso.');
+      navigate('/');
       console.log('Chamados carregados:', data);          
     } catch (error) {
       console.error(error);
